@@ -1,0 +1,152 @@
+===============================================================================
+PROTOTYPE V2 - SCRIPTS PIPELINE GUIDE (FOR THE FUTURE STUDENT)
+===============================================================================
+
+File:
+    00_PIPELINE_GUIDE.txt
+
+Purpose:
+    This folder contains many scripts. This guide explains WHAT each
+    script does and in WHICH ORDER to run them, so you can rebuild the
+    whole dataset and model from zero without guessing.
+
+    Every script also has its own detailed explanation in its header.
+    Read the header before running a script for the first time.
+
+-------------------------------------------------------------------------------
+PHASE A - RECORD THE DATASET
+-------------------------------------------------------------------------------
+
+1.  record_dataset.py
+        Record controlled experiment trials from the camera.
+        Guided workflow: experiment session, trial condition menu,
+        automatic trial numbers. Produces videos + trials.csv.
+        (record_dataset_backup.py and record_dataset_v2_1.py are
+        older versions, kept only as history. Do not use them.)
+
+-------------------------------------------------------------------------------
+PHASE B - FROM VIDEOS TO A CLEAN IMAGE DATASET
+-------------------------------------------------------------------------------
+
+2.  extract_frames.py
+        Cut every trial video into single image frames.
+
+3.  check_dataset_quality.py
+        Measure sharpness and brightness of every frame. Flags
+        blurry or dark frames that would hurt training.
+
+4.  detect_near_duplicates.py
+        Find frames that are almost identical (the camera is fixed,
+        so many frames look the same). Duplicates add no learning
+        value and would leak between train/val/test.
+
+5.  build_review_manifest.py
+        Combine the quality and duplicate results into ONE review
+        list for the human check.
+
+6.  review_dataset.py
+        Interactive tool: a human looks at every candidate frame
+        and keeps or rejects it. AI helps, the human decides.
+
+7.  build_curated_dataset.py
+        Copy all APPROVED frames into the curated dataset folder.
+
+8.  finalize_dataset.py
+        Build the final annotation dataset + final_manifest.csv.
+        THIS is the image set that gets annotated.
+
+-------------------------------------------------------------------------------
+PHASE C - ANNOTATION (DONE IN CVAT, NOT A SCRIPT)
+-------------------------------------------------------------------------------
+
+9.  Upload the final images to CVAT and draw bounding boxes for
+    EVERY object in EVERY image (marker, power_adapter).
+
+    IMPORTANT: an image that contains an object but has NO
+    annotation teaches the model "this object is background".
+    This is the number one cause of low confidence. Annotate
+    everything.
+
+10. Download the export from CVAT in "YOLO 1.1" format.
+
+11. annotations_export.py
+        Unpack and verify the CVAT export, and check that every
+        final image has a matching label file.
+
+-------------------------------------------------------------------------------
+PHASE D - BUILD THE YOLO DATASET AND TRAIN
+-------------------------------------------------------------------------------
+
+12. prepare_yolo_dataset.py
+        Build the train / val / test folder structure that YOLO
+        needs. The split is TRIAL-BASED (all images of one trial
+        stay together) so no trial leaks between splits. Trials
+        are discovered automatically - works for 15 or 500 trials
+        with no code changes.
+
+13. train_yolo.py                                            (NEW)
+        Train the YOLO model, evaluate it on the test split,
+        back up the old weights/best.pt, and deploy the new
+        model to weights/best.pt.
+
+        After this script finishes, the LIVE software
+        (Assembly_monitor/main.py) automatically uses the new
+        model, because settings.py points to weights/best.pt.
+        Training was previously done with manual terminal
+        commands - this script makes it repeatable.
+
+-------------------------------------------------------------------------------
+PHASE E - RUN AND ANALYZE THE SYSTEM
+-------------------------------------------------------------------------------
+
+14. Assembly_monitor/main.py       (in the Assembly_monitor folder)
+        The live system: camera -> YOLO detection -> events ->
+        analytics -> visualization, in real time.
+
+15. run_offline_inference.py
+        Run the trained model on a recorded video instead of the
+        live camera. Produces raw_detections.csv.
+
+16. build_detection_timeline.py
+        Convert raw detections into a frame-by-frame timeline.
+
+17. run_state_machine.py
+        Convert the timeline into assembly states and process
+        events (temporal filtering).
+
+18. process_analytics.py
+        Compute process metrics (step times, cycle times, ...).
+
+19. visualize_process_video.py
+        Render the final visualization video with detections,
+        states and metrics drawn on every frame.
+
+-------------------------------------------------------------------------------
+PHASE F - QUANTITATIVE VALIDATION (FOR THE THESIS)
+-------------------------------------------------------------------------------
+
+20. create_validation_ground_truth.py
+        A human labels, frame by frame, what is REALLY visible in
+        a validation video. This is the ground truth.
+
+21. clean_ground_truth_progress.py
+        Helper: repair / reset an interrupted ground-truth session.
+
+22. run_validation_experiment.py
+        Run the full pipeline on the validation video.
+
+23. compare_validation_predictions.py
+        Compare model predictions against the human ground truth
+        and compute accuracy numbers for the thesis.
+
+24. analyze_validation_errors.py
+        Break the errors down: WHERE and WHY does the model fail?
+
+25. analyze_dataset_coverage.py
+        Statistics about the dataset itself: images per trial,
+        per condition, per class - shows coverage gaps to fill
+        in the next recording session.
+
+===============================================================================
+END OF GUIDE
+===============================================================================

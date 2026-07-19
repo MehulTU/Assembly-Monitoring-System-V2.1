@@ -1,0 +1,5 @@
+names:
+  0: marker
+  1: power_adapter
+path: .
+train: train.txt

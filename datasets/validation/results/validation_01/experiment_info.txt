@@ -1,0 +1,14 @@
+PROTOTYPE V2 VALIDATION EXPERIMENT
+============================================================
+
+Experiment name: validation_01
+Validation video: validation_01_correct_sequence.mp4
+Validation video path: C:\Users\mehul\Desktop\Thesis\SOFTWARE V2 AI PROTOTYPE\datasets\validation\videos\validation_01_correct_sequence.mp4
+Execution time: 2026-07-17T20:24:46
+YOLO model path: C:\Users\mehul\Desktop\Thesis\SOFTWARE V2 AI PROTOTYPE\weights\best.pt
+Training dataset modified: NO
+YOLO model retrained: NO
+Manual video selection required: NO
+Raw source video overwritten: NO
+Pipeline outputs copied: 6
+Missing expected outputs: 0

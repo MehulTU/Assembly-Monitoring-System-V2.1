@@ -1,0 +1,7 @@
+path: C:\Users\mehul\Desktop\Thesis\SOFTWARE V2 AI PROTOTYPE\datasets\yolo_dataset_v1
+train: images/train
+val: images/val
+test: images/test
+names:
+  0: marker
+  1: power_adapter

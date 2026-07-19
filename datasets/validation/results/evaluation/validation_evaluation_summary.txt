@@ -1,0 +1,43 @@
+PROTOTYPE V2 - QUANTITATIVE VALIDATION EVALUATION
+===========================================================================
+Experiment: validation_01
+
+Total evaluated frames: 1298
+Correct assembly-state frames: 1064
+Incorrect assembly-state frames: 234
+Assembly-state accuracy: 0.819723 (81.97%)
+Assembly-state error rate: 0.180277 (18.03%)
+
+MARKER PRESENCE METRICS
+Accuracy : 0.921418
+Precision: 0.996462
+Recall   : 0.895127
+F1-score : 0.943080
+
+POWER-ADAPTER PRESENCE METRICS
+Accuracy : 0.898305
+Precision: 0.970350
+Recall   : 0.748441
+F1-score : 0.845070
+
+Error segments: 11
+Ground-truth transitions: 6
+Predicted transitions: 16
+Matched ground-truth transitions: 6
+Unmatched ground-truth transitions: 0
+Mean absolute transition frame error: 15.000
+Mean absolute transition time error: 0.500000 seconds
+
+PER-STATE METRICS
+    assembly_state  precision   recall  f1_score  support  true_positive  false_positive  false_negative
+             EMPTY   0.969613 0.991525  0.980447      354            351              11               3
+       MARKER_ONLY   0.780531 0.952484  0.857977      463            441             124              22
+POWER_ADAPTER_ONLY   0.000000 0.000000  0.000000        0              0              88               0
+      BOTH_PRESENT   0.961131 0.565489  0.712042      481            272              11             209
+
+CONFUSION MATRIX
+                    EMPTY  MARKER_ONLY  POWER_ADAPTER_ONLY  BOTH_PRESENT
+EMPTY                 351            3                   0             0
+MARKER_ONLY            11          441                   0            11
+POWER_ADAPTER_ONLY      0            0                   0             0
+BOTH_PRESENT            0          121                  88           272

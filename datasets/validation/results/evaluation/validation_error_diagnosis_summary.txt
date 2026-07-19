@@ -1,0 +1,28 @@
+PROTOTYPE V2 - VALIDATION ERROR DIAGNOSIS SUMMARY
+===========================================================================
+Experiment: validation_01
+Evaluated frames: 1298
+Incorrect frames: 234
+Ground-truth transitions: 6
+Predicted transitions analyzed: 16
+False predicted transitions: 11
+
+ERROR CAUSE SUMMARY
+---------------------------------------------------------------------------
+DETECTION_ERROR: 220 frames (94.02%)
+TEMPORAL_FILTER_ERROR: 14 frames (5.98%)
+
+RESPONSIBLE OBJECT SUMMARY
+---------------------------------------------------------------------------
+POWER_ADAPTER: 132 frames (56.41%)
+MARKER: 102 frames (43.59%)
+
+PRIMARY FAILURE MODE
+---------------------------------------------------------------------------
+Primary diagnosed cause: DETECTION_ERROR
+Primary responsible object: POWER_ADAPTER
+
+INTERPRETATION
+---------------------------------------------------------------------------
+The dominant validation failure originates from frame-level object detection instability.
+The next engineering stage should inspect detector failures, confidence scores, object motion, occlusion, and training-data coverage before modifying the state machine.

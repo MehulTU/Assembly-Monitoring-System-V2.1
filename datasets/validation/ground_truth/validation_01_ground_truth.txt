@@ -1,0 +1,73 @@
+VALIDATION EXPERIMENT 01
+========================
+
+VIDEO:
+validation_01_correct_sequence.mp4
+
+PURPOSE:
+Controlled system-level validation of the complete Prototype V2 pipeline.
+
+THIS VIDEO WAS NOT USED FOR YOLO TRAINING.
+
+EXPECTED STABLE STATE SEQUENCE:
+
+1. EMPTY
+
+2. MARKER_ONLY
+
+3. BOTH_PRESENT
+
+4. MARKER_ONLY
+
+5. BOTH_PRESENT
+
+6. EMPTY
+
+
+EXPECTED ASSEMBLY COMPLETION EVENTS:
+
+2
+
+
+EXPECTED SEQUENCE VIOLATIONS:
+
+0
+
+
+EXPERIMENT PROCEDURE:
+
+EMPTY:
+Approximately 7 seconds.
+
+MARKER_ONLY:
+Approximately 5 seconds.
+
+BOTH_PRESENT:
+Approximately 5 seconds.
+
+MARKER_ONLY:
+Approximately 5 seconds.
+
+BOTH_PRESENT:
+Approximately 7 seconds.
+
+EMPTY:
+Approximately 7 seconds.
+
+
+OBJECTS:
+
+Class 0:
+marker
+
+Class 1:
+power_adapter
+
+
+NOTES:
+
+The video was recorded using the existing Prototype V2 recording program.
+
+The camera setup and physical workspace were kept consistent with the original dataset acquisition setup.
+
+The video was separated from the YOLO training dataset and is reserved for system-level validation.
